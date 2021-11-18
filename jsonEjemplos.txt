@@ -1,0 +1,127 @@
+JSONS DE PRUEBAS
+
+----->>>>>PERSONA
+http://localhost:8484/api/persona/crear
+{
+  "apellidos": "Cardenas",
+  "direccion": "Gonsalez Suarez",
+  "email": "jc@gmail.com",
+  "estaActivo": "S",
+  "idPersona": 1,
+  "identificacion": "0105764062",
+  "lstCuentas": [],
+  "nombres": "Juan"
+}
+
+http://localhost:8484/api/persona/crear
+{
+  "apellidos": "Lopez",
+  "direccion": "Cumanda",
+  "email": "jl@gmail.com",
+  "estaActivo": "S",
+  "idPersona": 2,
+  "identificacion": "0704672716",
+  "lstCuentas": [],
+  "nombres": "Jose"
+}
+
+
+----->>>>>CUENTA
+http://localhost:8484/api/cuenta/crear
+{
+  "codigo": "C001-P001",
+  "estaActivo": "S",
+  "fecha": "2021-11-17T19:10:18.410Z",
+  "idCuenta": 1,
+  "lstTransacciones": [
+	{
+	      "codigo": "T001",
+	      "cuenta": {},
+	      "estaActivo": "S",
+	      "fecha": "2021-11-17T19:10:18.410Z",
+	      "idTransaccion": 1,
+	      "monto": 10,
+	      "tipo": "1"
+	    }
+	],
+  "monto": 10,
+  "persona": {    
+    "idPersona": 1
+  }
+}
+
+----->>>>>CUENTA
+http://localhost:8484/api/cuenta/crear
+{
+  "codigo": "C002-P001",
+  "estaActivo": "S",
+  "fecha": "2021-11-18T19:10:18.410Z",
+  "idCuenta": 2,
+  "lstTransacciones": [
+	{
+	      "codigo": "T002",
+	      "cuenta": {},
+	      "estaActivo": "S",
+	      "fecha": "2021-11-18T19:10:18.410Z",
+	      "idTransaccion": 2,
+	      "monto": 15,
+	      "tipo": "1"
+	    }
+	],
+  "monto": 15,
+  "persona": {    
+    "idPersona": 1
+  }
+}
+
+----->>>>>CUENTA
+http://localhost:8484/api/cuenta/crear
+{
+  "codigo": "C001-P002",
+  "estaActivo": "S",
+  "fecha": "2021-11-20T19:10:18.410Z",
+  "idCuenta": 3,
+  "lstTransacciones": [
+	{
+	      "codigo": "T003",
+	      "cuenta": {},
+	      "estaActivo": "S",
+	      "fecha": "2021-11-20T19:10:18.410Z",
+	      "idTransaccion": 3,
+	      "monto": 25,
+	      "tipo": "1"
+	    }
+	],
+  "monto": 25,
+  "persona": {    
+    "idPersona": 2
+  }
+}
+
+
+----->>>>>TRANSACCIONES
+http://localhost:8484/api/transaccion/crear
+[
+  {
+    "codigo": "T004",
+    "cuenta": {
+      "idCuenta": 1
+    },
+    "estaActivo": "S",
+    "fecha": "2021-11-17T20:30:59.977Z",
+    "idTransaccion": 4,
+    "monto": 1,
+    "tipo": "0"
+  },
+  {
+    "codigo": "T005",
+    "cuenta": {
+      "idCuenta": 3
+    },
+    "estaActivo": "S",
+    "fecha": "2021-11-17T20:30:59.977Z",
+    "idTransaccion": 5,
+    "monto": 2,
+    "tipo": "0"
+  }
+]
