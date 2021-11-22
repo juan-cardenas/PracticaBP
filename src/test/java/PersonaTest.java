@@ -1,3 +1,4 @@
+
 import devsu.model.Persona;
 import devsu.model.enums.EstadoEstaActivoEnum;
 import devsu.rest.PersonaRest;
@@ -5,6 +6,7 @@ import devsu.service.cust.PersonaControladorCustom;
 //import org.junit.Before;
 //import org.junit.Test;
 import devsu.util.Validacion;
+import net.bytebuddy.implementation.bytecode.Throw;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -52,7 +54,8 @@ public class PersonaTest {
         persona.setDireccion("Juan Montalvo");
         persona.setEmail("jc@gmail.com");
         persona.setEstaActivo(EstadoEstaActivoEnum.SI.getCodigo());
-        Assertions.assertEquals(10, persona.getIdentificacion().length());
+        Assertions.assertEquals(10, persona.getIdentificacion().length(), "404");
+//        Assertions.assertThrows(new Throw(Exception).toString());
     }
 
 

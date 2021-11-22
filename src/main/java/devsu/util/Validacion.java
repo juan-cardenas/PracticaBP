@@ -1,59 +1,58 @@
 package devsu.util;
 
 
+
+import com.google.gson.Gson;
 import devsu.model.Cuenta;
 import devsu.model.Transaccion;
 import devsu.model.enums.EstadoErrorEnum;
 import devsu.model.enums.EstadoEstaActivoEnum;
 import devsu.repository.CuentaControlador;
 import devsu.repository.TransaccionControlador;
+import org.json.JSONObject;
+import org.json.JSONTokener;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import javax.ws.rs.client.*;
+import javax.ws.rs.core.Response;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 public class Validacion {
 
 
     public static void validadorDeCedula(String cedula) throws Exception {
-        boolean cedulaCorrecta = false;
+        String res = "";
+        String URLtext = "https://mocki.io/v1/2d5fc002-bc01-464e-a6d4-6958d96e0835";
         try {
-            if (cedula.length() == 10) {
-                int tercerDigito = Integer.parseInt(cedula.substring(2, 3));
-                if (tercerDigito < 6) {
-                        // Coeficientes de validación cédula
-                    // El decimo digito se lo considera dígito verificador
-                    int[] coefValCedula = {2, 1, 2, 1, 2, 1, 2, 1, 2};
-                    int verificador = Integer.parseInt(cedula.substring(9, 10));
-                    int suma = 0;
-                    int digito = 0;
-                    for (int i = 0; i < (cedula.length() - 1); i++) {
-                        digito = Integer.parseInt(cedula.substring(i, i + 1)) * coefValCedula[i];
-                        suma += ((digito % 10) + (digito / 10));
-                    }
-                    if ((suma % 10 == 0) && (suma % 10 == verificador)) {
-                        cedulaCorrecta = true;
-                    } else if ((10 - (suma % 10)) == verificador) {
-                        cedulaCorrecta = true;
-                    } else {
-                        cedulaCorrecta = false;
-                    }
-                } else {
-                    cedulaCorrecta = false;
-                }
-            } else {
-                cedulaCorrecta = false;
+
+            java.net.URL url = new URL(URLtext);//your url i.e fetch data from .
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("GET");
+            conn.setRequestProperty("Accept", "application/json");
+            if (conn.getResponseCode() != 200) {
+                throw new RuntimeException("Failed : HTTP Error code : "
+                        + conn.getResponseCode());
             }
-        } catch (NumberFormatException nfe) {
-            cedulaCorrecta = false;
-        } catch (Exception err) {
-            cedulaCorrecta = false;
-            throw new Exception(
-                    EstadoErrorEnum.EJECUCION.getCodigo() + " Error en el proceso de validadcion");
-        } finally {
-            if (!cedulaCorrecta) {
-                throw new Exception(
-                        EstadoErrorEnum.VALIDACION.getCodigo() + " La Cédula ingresada es incorrecta");
+            InputStreamReader in = new InputStreamReader(conn.getInputStream());
+            BufferedReader br = new BufferedReader(in);
+            JSONTokener tokener = new JSONTokener(br);
+            JSONObject json = new JSONObject(tokener);
+            Object jsonRegistroCivil = json.get("registroCivil");
+            System.out.println(json.get("registroCivil"));
+            String output;
+            while ((output = br.readLine()) != null) {
+                System.out.println(output);
             }
+            conn.disconnect();
+
+        } catch (Exception e) {
+            System.out.println("Exception in NetClientGet:- " + e);
         }
     }
+
 
     public static void validarDependenciasCuenta(Cuenta cuenta) throws Exception {
         if (cuenta.getPersona() == null){
