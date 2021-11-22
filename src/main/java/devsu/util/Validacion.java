@@ -23,9 +23,10 @@ import java.net.URL;
 public class Validacion {
 
 
-    public static void validadorDeCedula(String cedula) throws Exception {
+    public static Boolean validadorDeCedula(String cedula) throws Exception {
         String res = "";
         String URLtext = "https://mocki.io/v1/2d5fc002-bc01-464e-a6d4-6958d96e0835";
+        Boolean validacionCedula = false;
         try {
 
             java.net.URL url = new URL(URLtext);//your url i.e fetch data from .
@@ -40,17 +41,16 @@ public class Validacion {
             BufferedReader br = new BufferedReader(in);
             JSONTokener tokener = new JSONTokener(br);
             JSONObject json = new JSONObject(tokener);
-            Object jsonRegistroCivil = json.get("registroCivil");
-            System.out.println(json.get("registroCivil"));
-            String output;
-            while ((output = br.readLine()) != null) {
-                System.out.println(output);
-            }
+            JSONObject jsonRegistroCivil = (JSONObject) json.get("registroCivil");
+            validacionCedula = (Boolean) jsonRegistroCivil.get("validation");
+//            System.out.println(json.get("registroCivil"));
+
             conn.disconnect();
 
         } catch (Exception e) {
             System.out.println("Exception in NetClientGet:- " + e);
         }
+        return validacionCedula;
     }
 
 
